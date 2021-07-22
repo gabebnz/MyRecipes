@@ -12,3 +12,6 @@ Are you a budding amateur chef with a bookmark bar full with all your favourite 
 - Nutritional information
 - Add photos and notes
 - Google Sign-in for easy access
+
+### Important Links
+- [Trello](https://trello.com/b/bAqR5lwj/2021s252myrecipes)
