@@ -16,7 +16,7 @@ Are you a budding amateur chef with a bookmark bar full with all your favourite 
 ### Important Links
 - [Trello](https://trello.com/b/bAqR5lwj/2021s252myrecipes)
 
-## (For MyRecipes Devs)
+## MyRecipes Dev Information
 ### Getting Started
 
 With GitHub Desktop download the project files.
