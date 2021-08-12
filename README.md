@@ -15,3 +15,18 @@ Are you a budding amateur chef with a bookmark bar full with all your favourite 
 
 ### Important Links
 - [Trello](https://trello.com/b/bAqR5lwj/2021s252myrecipes)
+
+## (For MyRecipes Devs)
+### Getting Started
+
+With GitHub Desktop download the project files.
+
+### NodeJs & npm
+You will need to install [NodeJs](https://nodejs.org/en/download/) v14.17.5. 
+This will also install npm which you will need to install packages.
+
+Once they have been installed, open command prompt/terminal, navigate to the project folder and run:
+```
+npm install
+```
+This should install everything you need to get started.
