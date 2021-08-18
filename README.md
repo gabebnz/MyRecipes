@@ -30,3 +30,17 @@ Once they have been installed, open command prompt/terminal, navigate to the pro
 npm install
 ```
 This should install everything you need to get started.
+
+### Running the website
+To run the website, open command prompt/terminal inside the project folder and run: 
+```
+nodemon myrecipes
+```
+This should run the server without errors.
+
+Then in your browser type:
+```
+localhost:3000
+```
+
+To stop the server cleanly hold: ```ctrl+c / cmd+c``` while inside command prompt / terminal.
