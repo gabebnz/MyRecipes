@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  include header.pug
+  body 
+    // You can see the use of a variable below with the title
+    // This is inherited from /routes/index.js where you can pass these in
+    h1= title
+    p Welcome to the site: #{title} 
+      body

@@ -16,4 +16,13 @@ router.get('/shoppinglist', function(req, res, next) {
   res.render('shoppinglist', { title: 'Shopping List' });
 });
 
+/* GET shoppinglist page. */
+router.get('/insertRecipes', function(req, res, next) {
+  res.render('insertRecipes', { title: 'Insert Recipes' });
+});
+
+// router.post('/mealplanner', function(req, res){ //using for insert later
+//   console.log('test');
+// });
+
 module.exports = router;
