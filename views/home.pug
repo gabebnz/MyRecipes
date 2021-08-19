@@ -1,0 +1,121 @@
+extends layout
+
+block content
+  include header.pug
+  head
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script.
+      function GotoInsertRecipes() {
+        //- $.ajax({
+        //-   "url": "/mealplanner",
+        //-   "method": "POST"
+        //- }); 
+        $.ajax({url: "/insertRecipes", success: function(result){
+        $("body").html(result);
+        }});
+      }
+  style.
+    button {
+      margin-top : 25px;
+      position: absolute;
+      right: 120px;
+      outline:none;
+      height: 40px;
+      text-align: center;
+      width: 130px;
+      border-radius:40px;
+      background: #fff;
+      border: 2px solid $green;
+      color:$green;
+      letter-spacing:1px;
+      text-shadow:0;
+      font:{
+        size:12px;
+        weight:bold;
+      }
+      cursor: pointer;
+      transition: all 0.25s ease;
+      &:hover {
+        color:white;
+        background: $green;
+      }
+      &:active {
+        letter-spacing: 2px ;
+      }
+      &:after {
+        content:"SUBMIT";
+      }
+    }
+    .onclic {
+      width: 40px;
+      border-color:$gray;
+      border-width:3px;
+      font-size:0;
+      border-left-color:$green;
+      animation: rotating 2s 0.25s linear infinite;
+
+      &:after {
+        content:"";
+      }
+      &:hover {
+        color:$green;
+        background: white;
+      }
+    }
+    .validate {
+      font-size:13px;
+      color: white;
+      background: $green;
+      &:after {
+        font-family:'FontAwesome';
+        content:"\f00c";
+      }
+    }
+
+    @keyframes rotating {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+  body 
+    // You can see the use of a variable below with the title
+    // This is inherited from /routes/index.js where you can pass these in
+    //- h1= title
+    //- p Welcome to the site: #{title} 
+      body
+    main#main
+    button.buttonComponent(onclick="GotoInsertRecipes()")
+      b Upload  
+    h1.ui.center.aligned.header All Recipes
+    .ui.container
+      table.ui.celled.table.center.aligned
+        thead
+          tr
+            th ID
+            th Title
+            th Description
+            th Link/Photo
+            th Comments
+        tbody
+          //- each employee in employees **later load the data from database
+          //-   tr
+          //-     td
+          //-       img.ui.mini.rounded.image(src=employee.picture.thumbnail)
+          //-     td #{employee.name.first}
+          //-     td #{employee.name.last}
+          //-     td #{employee.email}
+          //-     td #{employee.phone}
+          //-     td #{employee.location.city}
+          tr
+            td 1
+            td Testing title
+            td Here is the testing
+            td None
+            td Testing
+        tfoot
+          tr
+            th(colspan='6')
