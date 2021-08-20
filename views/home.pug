@@ -84,9 +84,6 @@ block content
   body 
     // You can see the use of a variable below with the title
     // This is inherited from /routes/index.js where you can pass these in
-    //- h1= title
-    //- p Welcome to the site: #{title} 
-      body
     main#main
     button.buttonComponent(onclick="GotoInsertRecipes()")
       b Upload  
@@ -101,21 +98,11 @@ block content
             th Link/Photo
             th Comments
         tbody
-          //- each employee in employees **later load the data from database
-          //-   tr
-          //-     td
-          //-       img.ui.mini.rounded.image(src=employee.picture.thumbnail)
-          //-     td #{employee.name.first}
-          //-     td #{employee.name.last}
-          //-     td #{employee.email}
-          //-     td #{employee.phone}
-          //-     td #{employee.location.city}
-          tr
-            td 1
-            td Testing title
-            td Here is the testing
-            td None
-            td Testing
-        tfoot
-          tr
+          each columns in column
+            tr
+              td #{columns._id}
+              td #{columns.Title}
+              td #{columns.Description}
+              td #{columns.URL}
+              td #{columns.Comments}
             th(colspan='6')

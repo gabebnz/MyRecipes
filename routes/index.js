@@ -8,8 +8,25 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET home page. */
+// router.get('/home', function(req, res, next) {
+//   res.render('home', { title: 'MyRecipes' });
+// });
+
 router.get('/home', function(req, res, next) {
-  res.render('home', { title: 'MyRecipes' });
+  Column.find({}, function (err, docs) {
+    if (err){
+        console.log(err);
+    }
+    else{
+        column = docs;
+        //console.log(column);
+    }
+  })
+  .then(function(response) { 
+    column => res.json(response);
+    res.render('home', { title: 'MyRecipes' });
+  })
+  .catch(err => console.log(err));
 });
 
 /* GET mealplanner page. */
@@ -27,11 +44,11 @@ router.get('/insertRecipes', function(req, res, next) {
   res.render('insertRecipes', { title: 'Insert Recipes' });
 });
 
-router.post('/insertRecipes', function(req, res){ //using for insert later
+router.post('/insertRecipes', function(req, res){ //may remove
   console.log('MyRecipes');
 });
 
-router.post('/', function(req, res){ //using for insert later
+router.post('/', function(req, res){ //using for insert
   const insertColumn = new Column ({
     Title: req.body.Title,
     Description:req.body.Description,
@@ -43,8 +60,9 @@ router.post('/', function(req, res){ //using for insert later
         console.error(error)}
     else{
         console.log('You have saved the recipes!'); //change to alert later
+        console.log(document);
         res.redirect('/home');
-        console.log(document)}
+      }
   })
 });
 
