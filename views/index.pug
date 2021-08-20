@@ -2,9 +2,23 @@ extends layout
 
 block content
   include header.pug
+
+  head
+    style.
+      h1 {
+        color: Blue;
+        text-align: center;
+      }
+      p {
+        text-align: center;
+        font-size: 20px;
+      }
+
   body 
     // You can see the use of a variable below with the title
     // This is inherited from /routes/index.js where you can pass these in
-    h1= title
-    p Welcome to the site: #{title} 
+    h1 Welcome to #{title} 
+    p In our website, user can view and manage the recipes.
+    p Try to save your favourite recipes!
+    p Click home to view all the recipes
       body
