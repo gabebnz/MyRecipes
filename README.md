@@ -34,7 +34,7 @@ This should install everything you need to get started.
 ### Running the website
 To run the website, open command prompt/terminal inside the project folder and run: 
 ```
-nodemon myrecipes
+nodemon start
 ```
 This should run the server without errors.
 
