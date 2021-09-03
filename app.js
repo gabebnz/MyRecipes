@@ -27,20 +27,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/home', indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-//for redirect function
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/home'); // create your index.html file
-});
-app.get('/home', function(req, res) {
-  res.redirect('/home');
-});
 // Connect Database
 connectDB()
 

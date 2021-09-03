@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('config');
-const db = "mongodb+srv://admin:admin@myrecipes.hckua.mongodb.net/test";
+const db = "mongodb+srv://admin:admin@myrecipes.hckua.mongodb.net/MyRecipes";
 
 const connectDB = async () => {
   try {
