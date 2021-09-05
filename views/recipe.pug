@@ -1,11 +1,35 @@
 extends layout
 
-block content
-  include header.pug
 
-  body 
+
+block content
+    head 
+        link(rel='stylesheet', href='/stylesheets/recipe-style.css')
+    include header.pug
+
     if recipe == null
-        h1 Whats
-    if recipe != null
-        h1 #{recipe._id}
-        h1 #{recipe.Title}
+        h1 RECIPE ID NOT FOUND (RECIPE NULL).
+    body 
+
+        .outerwrapper 
+            .leftwrapper 
+                .recipetitle 
+                    p (username)
+                    h1 #{recipe.Title}
+
+                .recipedescription 
+                    h2 About
+                    p #{recipe.Description}
+
+                .recipeingredients 
+                    h2 Ingredients
+
+                    each ingredient in recipe.Ingredients
+                        li #{ingredient}
+
+                .recipemethod 
+                    h2 Method
+                    p #{recipe.Method}
+
+            .rightwrapper 
+                p User actions will live in here. When you are logged in you can see edit, delete options etc

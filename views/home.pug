@@ -98,7 +98,7 @@ block content
         tbody
           each recipe in recipes
             tr
-              td #{recipe._id}
+              td: a(href="../recipe/" + recipe._id) #{recipe._id}
               td #{recipe.Title}
               td #{recipe.Description}
             th(colspan='6')
