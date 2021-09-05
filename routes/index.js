@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-const Column = require('../models/Column'); // old
 const recipes = require('../models/recipe');
 
 /* GET welcome page. */
@@ -11,16 +10,16 @@ router.get('/', function(req, res, next) {
 
 /* GET home page. */
 router.get('/home', function(req, res, next) {
-  Column.find({}, function (err, docs) {
+  recipes.find({}, function (err, docs) {
     if (err){
         console.log(err);
     }
     else{
-        column = docs;
+        recipess = docs;
     }
   })
   .then(function(response) {
-    res.render('home', { title: 'MyRecipes', columns:response});
+    res.render('home', { title: 'MyRecipes', recipes:response});
   })
   .catch(err => console.log(err));
 });
@@ -36,7 +35,6 @@ router.get('/recipe/:_id', function(req, res) {
     }
     else{
         recipe = docs;
-        console.log(recipe);
     }
   })
   .then(function(response) {
