@@ -64,9 +64,14 @@ router.post('/insertRecipes', function(req, res){ //may remove
 });
 
 router.post('/', function(req, res){ //using for insert
-  const insertColumn = new Column ({
+  GetUserID = 0; //change later
+
+  const insertColumn = new recipes ({
+    UserID: GetUserID,
     Title: req.body.Title,
     Description:req.body.Description,
+    Ingredients:req.body.Ingredients,
+    Method:req.body.Method,
     URL:req.body.URL,
     Comments:req.body.Comments,
   })
@@ -79,6 +84,17 @@ router.post('/', function(req, res){ //using for insert
         res.redirect('/home');
       }
   })
+});
+
+router.post('/delete', function(req, res){ //using for delete
+  var data = JSON.parse(req.body.CheckedID);
+
+  data.forEach(checkedID => {
+    console.log(checkedID);
+    recipes.findByIdAndRemove(checkedID)
+    .then(recipes => res.json({ mgs: 'Recipes deleted successfully' }))
+    .catch(err => res.status(404).json({ error: 'No such recipes' }));
+  });
 });
 
 module.exports = router;
