@@ -1,4 +1,4 @@
 {
     "mongoURI":
-      "mongodb+srv://admin:admin@myrecipes.hckua.mongodb.net/test"
+      "mongodb+srv://admin:admin@myrecipes.hckua.mongodb.net/myrecipes"
   }

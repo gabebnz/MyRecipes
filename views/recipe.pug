@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  include header.pug
+
+  body 
+    if recipe == null
+        h1 Whats
+    if recipe != null
+        h1 #{recipe._id}
+        h1 #{recipe.Title}

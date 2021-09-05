@@ -1,6 +1,6 @@
 # MyRecipes
 
-Are you a budding amateur chef with a bookmark bar full with all your favourite recipes?  We are looking to develop a Web Application where you can store all your saved recipes in one place. Our app will automatically save and format recipes from provided URLs PDFs and Images.
+Are you a budding amateur chef with a bookmark bar full with all your favourite recipes?  We are looking to develop a Web Application where you can store all your saved recipes in one place.
 
 
 ### Other features will include:
@@ -34,7 +34,7 @@ This should install everything you need to get started.
 ### Running the website
 To run the website, open command prompt/terminal inside the project folder and run: 
 ```
-nodemon myrecipes
+nodemon start
 ```
 This should run the server without errors.
 

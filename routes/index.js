@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const Column = require('../models/Column');
+
+const recipes = require('../models/recipe');
 
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
@@ -8,27 +9,41 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET home page. */
-// router.get('/home', function(req, res, next) {
-//   res.render('home', { title: 'MyRecipes' });
-// });
-
 router.get('/home', function(req, res, next) {
-  Column.find({}, function (err, docs) {
+  recipes.find({}, function (err, docs) {
     if (err){
         console.log(err);
     }
     else{
-        column = docs;
-        //console.log(column);
+        recipess = docs;
     }
   })
-  .then(function(response) { 
-    column => res.json(response);
-    res.render('home', { title: 'MyRecipes' });
+  .then(function(response) {
+    res.render('home', { title: 'MyRecipes', recipes:response});
   })
   .catch(err => console.log(err));
 });
 
+/* GET recipe page. */
+router.get('/recipe/:_id', function(req, res) {
+  
+  var id = req.params._id;
+
+  recipes.findOne({"_id":id}, function (err, docs){
+    if (err){
+      console.log(err);
+    }
+    else{
+        recipe = docs;
+    }
+  })
+  .then(function(response) {
+    res.render('recipe', { title: 'Recipe', recipe:response});
+  })
+  .catch(err => console.log(err));
+});
+
+ 
 /* GET mealplanner page. */
 router.get('/mealplanner', function(req, res, next) {
   res.render('mealplanner', { title: 'Meal Planner' });
