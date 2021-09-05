@@ -4,7 +4,7 @@ block content
   include header.pug
   head
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-    script.
+    script. 
       function GotoInsertRecipes() {
         //- $.ajax({
         //-   "url": "/mealplanner",
@@ -154,8 +154,7 @@ block content
         tbody
           each recipe in recipes
             tr
-              td 
-                input(type='checkbox',name = 'recpiesCheckBox', id = recipe._id)
+              td: input(type='checkbox',name = 'recpiesCheckBox', id = recipe._id)
               td: a(href="../recipe/" + recipe._id) #{recipe._id}
               td #{recipe.Title}
               td #{recipe.Description}

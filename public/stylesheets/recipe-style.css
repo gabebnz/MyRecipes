@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
+
+body{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    height:100vh;
+}
+
+.outerwrapper{
+    display:flex;
+    flex-direction: row;
+    height:100%;
+    width:100%;
+    max-width: 1500px;
+
+}
+
+.leftwrapper{
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    width:80%;
+    padding:20px;
+
+}
+
+.leftwrapper h2{
+    display:flex;
+    flex-shrink:1;
+    margin-bottom: 5px;
+    font-size: 2em;
+}
+
+.recipedescription{
+    margin-top:10px;
+    font-size: 1.25em;
+
+}
+
+.recipeingredients{
+    margin-top:10px;
+    font-size: 1.25em;
+}
+
+.recipeingredients li{
+    margin-left: 15px;
+}
+
+.recipemethod{
+    margin-top:10px;
+    font-size: 1.25em;
+}
+
+.recipetitle{
+    display:flex;
+    flex-direction: column;
+    color:black;
+    width:100%;    
+    border-bottom:2px solid rgb(100, 100, 100);
+}
+
+.recipetitle h1{
+    font-size: 5em;
+    font-family: 'Unica One', cursive;
+}
+
+.rightwrapper{
+    padding:20px;
+    height:100%;
+    width:20%;
+}

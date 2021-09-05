@@ -5,3 +5,11 @@
   margin:0;
   font-family: 'Open Sans', sans-serif;
 }
+
+/*This fixes padding causing overflow*/
+* , *:before, *:after{  
+  box-sizing:border-box; 
+  -moz-box-sizing:border-box; 
+  -webkit-box-sizing:border-box; 
+  -ms-box-sizing:border-box;
+}

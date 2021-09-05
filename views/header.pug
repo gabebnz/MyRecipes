@@ -1,20 +1,17 @@
-head
-    link(rel='stylesheet', href='/stylesheets/nav-style.css')
-
 div(class="nav-wrapper")
 
     div(class="title")
-        h1: a(href="/") My Recipes
+        h1: a(href="../") My Recipes
 
     div(class="navigation")
         ul 
             // we will only show these if logged in.
-            li: a(href="home") Home
-            li: a(href="mealplanner") Meal Planner
-            li: a(href="shoppinglist") Shopping List 
+            li: a(href="../home") Home
+            li: a(href="../mealplanner") Meal Planner
+            li: a(href="../shoppinglist") Shopping List 
 
 
             // Soon we will only display these if not logged in
-            li: a(href="Log In") Log In
-            li: a(href="Register") Register 
+            li: a(href="../Log In") Log In
+            li: a(href="../Register") Register 
 
