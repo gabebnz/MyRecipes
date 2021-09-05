@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
 
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -27,7 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use(bodyParser.urlencoded({ 
+  extended: true 
+}));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

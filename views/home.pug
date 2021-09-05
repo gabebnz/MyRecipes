@@ -11,14 +11,68 @@ block content
         //-   "method": "POST"
         //- }); 
         $.ajax({url: "/insertRecipes", success: function(result){
-        $("body").html(result);
+          $("body").html(result);
+        }});
+      }
+
+      function GotoDeleteRecipes() {
+        let CheckBox = document.getElementsByName("recpiesCheckBox");
+        const CheckedID = [];
+        let index = 0;
+
+        for(let i = 0; i < CheckBox.length; i++) {
+          if(CheckBox[i].checked == true) {
+            CheckedID[index] = CheckBox[i].id;
+            index++;
+          }
+        }
+
+        $.ajax({
+          url: "/delete", 
+          data: {CheckedID: JSON.stringify(CheckedID)}, 
+          method: "POST",
+          success: function(result){
+            alert("Recipes deleted successfully");
+            location.reload();
         }});
       }
   style.
-    button {
+    .buttonUpload {
       margin-top : 25px;
       position: absolute;
       right: 480px;
+      outline:none;
+      height: 40px;
+      text-align: center;
+      width: 130px;
+      border-radius:40px;
+      background: #fff;
+      border: 2px solid $green;
+      color:$green;
+      letter-spacing:1px;
+      text-shadow:0;
+      font:{
+        size:12px;
+        weight:bold;
+      }
+      cursor: pointer;
+      transition: all 0.25s ease;
+      &:hover {
+        color:white;
+        background: $green;
+      }
+      &:active {
+        letter-spacing: 2px ;
+      }
+      &:after {
+        content:"SUBMIT";
+      }
+    }
+
+    .buttonRemove {
+      margin-top : 25px;
+      position: absolute;
+      right: 330px;
       outline:none;
       height: 40px;
       text-align: center;
@@ -83,19 +137,25 @@ block content
 
   body 
     main#main
-    button.buttonComponent(onclick="GotoInsertRecipes()")
+    button.buttonUpload(onclick="GotoInsertRecipes()")
       b Upload  
+    button.buttonRemove(onclick="GotoDeleteRecipes()")
+      b Delete  
     h1.ui.center.aligned.header All Recipes
     .ui.container
+
       table.ui.celled.table.center.aligned
         thead
           tr
+            th Select
             th ID
             th Title
-            th Description
+            th Description          
         tbody
           each recipe in recipes
             tr
+              td 
+                input(type='checkbox',name = 'recpiesCheckBox', id = recipe._id)
               td #{recipe._id}
               td #{recipe.Title}
               td #{recipe.Description}
