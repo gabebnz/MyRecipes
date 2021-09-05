@@ -156,7 +156,7 @@ block content
             tr
               td 
                 input(type='checkbox',name = 'recpiesCheckBox', id = recipe._id)
-              td #{recipe._id}
+              td: a(href="../recipe/" + recipe._id) #{recipe._id}
               td #{recipe.Title}
               td #{recipe.Description}
             th(colspan='6')
