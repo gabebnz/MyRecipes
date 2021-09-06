@@ -1,7 +1,5 @@
 extends layout
 
-
-
 block content
     head 
         link(rel='stylesheet', href='/stylesheets/recipe-style.css')
@@ -10,11 +8,9 @@ block content
     if recipe == null
         h1 RECIPE ID NOT FOUND (RECIPE NULL).
     body 
-
         .outerwrapper 
             .leftwrapper 
                 .recipetitle 
-                    p (username)
                     h1 #{recipe.Title}
 
                 .recipedescription 
@@ -32,4 +28,7 @@ block content
                     p #{recipe.Method}
 
             .rightwrapper 
-                p User actions will live in here. When you are logged in you can see edit, delete options etc
+                .recipeheader 
+                    //This is an empty string. Not great but the easiest way to get the two 
+                    //columns to line up :)
+                    h1 ‎‎‎‎‏‏‎ ‎‏‏‎

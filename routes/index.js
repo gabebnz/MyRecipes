@@ -87,14 +87,10 @@ router.post('/', function(req, res){ //using for insert
 });
 
 router.post('/delete', function(req, res){ //using for delete
-  var data = JSON.parse(req.body.CheckedID);
-
-  data.forEach(checkedID => {
-    console.log(checkedID);
-    recipes.findByIdAndRemove(checkedID)
+  var data = req.body.ToDelete;
+  recipes.findByIdAndRemove(data)
     .then(recipes => res.json({ mgs: 'Recipes deleted successfully' }))
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
-  });
 });
 
 module.exports = router;
