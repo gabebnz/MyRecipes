@@ -1,161 +1,65 @@
 extends layout
 
 block content
+  
   include header.pug
-    head
-      script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-      script. 
-        function GotoInsertRecipes() {
-          //- $.ajax({
-          //-   "url": "/mealplanner",
-          //-   "method": "POST"
-          //- }); 
-          $.ajax({url: "/insertRecipes", success: function(result){
-            $("body").html(result);
-          }});
-        }
 
-      function GotoDeleteRecipes() {
-        let CheckBox = document.getElementsByName("recpiesCheckBox");
-        const CheckedID = [];
-        let index = 0;
+  head
+    link(rel='stylesheet', href='/stylesheets/home-style.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script. 
+      function GotoInsertRecipes() {
+        //- $.ajax({
+        //-   "url": "/mealplanner",
+        //-   "method": "POST"
+        //- }); 
+        $.ajax({url: "/insertRecipes", success: function(result){
+          $("body").html(result);
+        }});
+      }
 
-        for(let i = 0; i < CheckBox.length; i++) {
-          if(CheckBox[i].checked == true) {
-            CheckedID[index] = CheckBox[i].id;
-            index++;
-          }
-        }
 
+      function GotoDeleteRecipes(id) {
+        console.log("Hello");
+        console.log(id);
         $.ajax({
           url: "/delete", 
-          data: {CheckedID: JSON.stringify(CheckedID)}, 
+          data: {ToDelete: id}, 
           method: "POST",
           success: function(result){
             alert("Recipes deleted successfully");
             location.reload();
         }});
       }
-  style.
-    .buttonUpload {
-      margin-top : 25px;
-      position: absolute;
-      right: 480px;
-      outline:none;
-      height: 40px;
-      text-align: center;
-      width: 130px;
-      border-radius:40px;
-      background: #fff;
-      border: 2px solid $green;
-      color:$green;
-      letter-spacing:1px;
-      text-shadow:0;
-      font:{
-        size:12px;
-        weight:bold;
-      }
-      cursor: pointer;
-      transition: all 0.25s ease;
-      &:hover {
-        color:white;
-        background: $green;
-      }
-      &:active {
-        letter-spacing: 2px ;
-      }
-      &:after {
-        content:"SUBMIT";
-      }
-    }
 
-    .buttonRemove {
-      margin-top : 25px;
-      position: absolute;
-      right: 330px;
-      outline:none;
-      height: 40px;
-      text-align: center;
-      width: 130px;
-      border-radius:40px;
-      background: #fff;
-      border: 2px solid $green;
-      color:$green;
-      letter-spacing:1px;
-      text-shadow:0;
-      font:{
-        size:12px;
-        weight:bold;
-      }
-      cursor: pointer;
-      transition: all 0.25s ease;
-      &:hover {
-        color:white;
-        background: $green;
-      }
-      &:active {
-        letter-spacing: 2px ;
-      }
-      &:after {
-        content:"SUBMIT";
-      }
-    }
-    .onclic {
-      width: 40px;
-      border-color:$gray;
-      border-width:3px;
-      font-size:0;
-      border-left-color:$green;
-      animation: rotating 2s 0.25s linear infinite;
-
-      &:after {
-        content:"";
-      }
-      &:hover {
-        color:$green;
-        background: white;
-      }
-    }
-    .validate {
-      font-size:13px;
-      color: white;
-      background: $green;
-      &:after {
-        font-family:'FontAwesome';
-        content:"\f00c";
-      }
-    }
-
-    @keyframes rotating {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
 
   body 
-    main#main
-    button.buttonUpload(onclick="GotoInsertRecipes()")
-      b Upload  
-    button.buttonRemove(onclick="GotoDeleteRecipes()")
-      b Delete  
-    h1.ui.center.aligned.header All Recipes
-    .ui.container
+    .outerwrapper 
+      .leftwrapper 
+        .recipeheader 
+          h1 Your Recipes
 
-      table.ui.celled.table.center.aligned
-        thead
-          tr
-            th Select
-            th ID
-            th Title
-            th Description          
-        tbody
-          each recipe in recipes
-            tr
-              td: input(type='checkbox',name = 'recpiesCheckBox', id = recipe._id)
-              td: a(href="../recipe/" + recipe._id) #{recipe._id}
-              td #{recipe.Title}
-              td #{recipe.Description}
-            th(colspan='6')
+        each recipe in recipes
+          - var id = recipe._id
+          .recipewrapper 
+            a.recipeleft(href="../recipe/"+recipe.id)
+              .recipetitle 
+                h2 #{recipe.Title}
+                p by (username)
+              .recipedescription
+                p #{recipe.Description} 
+            
+            // Maybe the delete button should have an 'are you sure' alert
+            .reciperight(onclick="GotoDeleteRecipes("+JSON.stringify(id)+")") 
+              p x
+          
+      .rightwrapper 
+        .recipeheader 
+          //This is an empty string. Not great but the easiest way to get the two 
+          //columns to line up :)
+          h1 ‎‎‎‎‏‏‎ ‎
+          
+        a.recipewrapper(onclick="GotoInsertRecipes()")
+          .newrecipebutton 
+            p Create New Recipe
+

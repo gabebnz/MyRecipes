@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Unica+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
 .nav-wrapper {
     display:flex;
@@ -15,15 +15,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5px;
+    margin-top: 15px;
 
     text-align: center;
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 .title h1, .title a{
     color:black;
-    font-family: 'Unica One', cursive;
+    font-family: 'Josefin Sans', sans-serif;
     text-decoration: none;
 }
 
