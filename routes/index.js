@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const recipes = require('../models/recipe');
+const shoppinglist = require('../models/shoppinglist');
 
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
@@ -94,11 +95,8 @@ router.post('/delete', function(req, res){ //using for delete
 });
 
 router.post('/addshoppinglistitem', function(req, res){
-  console.log("here")
   let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
   let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
-  console.log(Item)
-
 
   shoppinglist.findOneAndUpdate(
     {_id: tempID},
@@ -108,7 +106,6 @@ router.post('/addshoppinglistitem', function(req, res){
           console.log(error);
           res.redirect('/shoppinglist');
       } else {
-          console.log("random")
           console.log(success);
           res.redirect('/shoppinglist');
       }
