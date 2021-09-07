@@ -1,11 +1,21 @@
 extends layout
 
 block content
+ 
+
+  head
+    link(rel='stylesheet', href='/stylesheets/recipe-style.css')
   include header.pug
 
   body 
-    // You can see the use of a variable below with the title
-    // This is inherited from /routes/index.js where you can pass these in
+    main#main
     h1= title
-    p Welcome to the site: #{title} 
-      body
+    p Welcome to the site: #{title}
+    form(role='form' action="/addshoppinglistitem" method="post" )
+      label(for='Item') Item:
+      input(type="text" name="Item" placeholder="e.g. 1kg Flour")
+      label(for='Quantity') Quantity:
+      input(type="number" name="Quantity" placeholder="e.g. 2")
+      input(value="Submit" type="submit")
+
+    body

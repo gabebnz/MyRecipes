@@ -93,4 +93,26 @@ router.post('/delete', function(req, res){ //using for delete
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
 });
 
+router.post('/addshoppinglistitem', function(req, res){
+  console.log("here")
+  let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
+  let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
+  console.log(Item)
+
+
+  shoppinglist.findOneAndUpdate(
+    {_id: tempID},
+    {$push:{List:Item}},
+    function (error, success) {
+      if (error) {
+          console.log(error);
+          res.redirect('/shoppinglist');
+      } else {
+          console.log("random")
+          console.log(success);
+          res.redirect('/shoppinglist');
+      }
+  });
+})
+
 module.exports = router;
