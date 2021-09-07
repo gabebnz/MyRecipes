@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 const recipes = require('../models/recipe');
-const shoppinglist = require('../models/shoppinglist');
 
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
@@ -93,26 +92,5 @@ router.post('/delete', function(req, res){ //using for delete
     .then(recipes => res.json({ mgs: 'Recipes deleted successfully' }))
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
 });
-
-router.post('/addshoppinglistitem', function(req, res){
-  console.log("here")
-  let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
-  let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
-  console.log(Item)
-
-
-  shoppinglist.findOneAndUpdate(
-    {_id: tempID},
-    {$push:{List:Item}},
-    function (error, success) {
-      if (error) {
-          console.log(error);
-      } else {
-          console.log("random")
-          console.log(success);
-
-      }
-  });
-})
 
 module.exports = router;
