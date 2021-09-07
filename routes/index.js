@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const recipes = require('../models/recipe');
+const shoppinglist = require('../models/recipe');
 
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
@@ -96,5 +97,21 @@ router.post('/delete', function(req, res){ //using for delete
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
   });
 });
+
+router.post('/addshoppinglistitem', function(req, res){
+  let UserID = 0; // temp until we get logins
+  let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
+
+  shoppinglist.findOneAndUpdate(
+    {_id: UserID},
+    {$push:{List:Item}},
+    function (error, success) {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log(success);
+      }
+  });
+})
 
 module.exports = router;
