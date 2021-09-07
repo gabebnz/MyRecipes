@@ -2,10 +2,103 @@ extends layout
 
 block content
   include header.pug
+   head
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script.
+      function GotoInsertShoppingList() {
+        //- $.ajax({
+        //-   "url": "/shoppinglist",
+        //-   "method": "POST"
+        //- }); 
+        $.ajax({url: "/insertShoppingList", success: function(result){
+        $("body").html(result);
+        }});
+      }
+  
+  style.
+    .buttonUpload {
+      margin-top : 25px;
+      position: absolute;
+      right: 480px;
+      outline:none;
+      height: 40px;
+      text-align: center;
+      width: 130px;
+      border-radius:40px;
+      background: #fff;
+      border: 2px solid $green;
+      color:$green;
+      letter-spacing:1px;
+      text-shadow:0;
+      font:{
+        size:12px;
+        weight:bold;
+      }
+      cursor: pointer;
+      transition: all 0.25s ease;
+      &:hover {
+        color:white;
+        background: $green;
+      }
+      &:active {
+        letter-spacing: 2px ;
+      }
+      &:after {
+        content:"SUBMIT";
+      }
+    }
+    .onclic {
+      width: 40px;
+      border-color:$gray;
+      border-width:3px;
+      font-size:0;
+      border-left-color:$green;
+      animation: rotating 2s 0.25s linear infinite;
 
+      &:after {
+        content:"";
+      }
+      &:hover {
+        color:$green;
+        background: white;
+      }
+    }
+    .validate {
+      font-size:13px;
+      color: white;
+      background: $green;
+      &:after {
+        font-family:'FontAwesome';
+        content:"\f00c";
+      }
+    }
+    @keyframes rotating {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
   body 
-    // You can see the use of a variable below with the title
-    // This is inherited from /routes/index.js where you can pass these in
+    main#main
+    button.buttonUpload(onclick="GotoInsertShoppingList()")
+      b Upload  
+      h1.ui.center.aligned.header Shopping List
+    .ui.container
+    table.ui.celled.table.center.aligned
+        thead
+          tr
+            th Item
+            th Quantity   
+        tbody
+          //- each Item in shoppinglist
+          //-   tr
+          //-     td: input(type='checkbox',name = 'recpiesCheckBox', id = recipe._id)
+          //-     td: a(href="../recipe/" + recipe._id) #{recipe._id}
+          //-     td #{reci pe.Title}
+          //-     td #{recipe.Description}
+          //-   th(colspan='6')
     h1= title
-    p Welcome to the site: #{title} 
+    p Welcome to the site boop boop: #{title}  
       body
