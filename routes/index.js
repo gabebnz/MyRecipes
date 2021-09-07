@@ -99,17 +99,22 @@ router.post('/delete', function(req, res){ //using for delete
 });
 
 router.post('/addshoppinglistitem', function(req, res){
-  let UserID = 0; // temp until we get logins
+  console.log("here")
+  let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
   let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
+  console.log(Item)
+
 
   shoppinglist.findOneAndUpdate(
-    {_id: UserID},
+    {_ID: tempID},
     {$push:{List:Item}},
     function (error, success) {
       if (error) {
           console.log(error);
       } else {
+          console.log("random")
           console.log(success);
+
       }
   });
 })
