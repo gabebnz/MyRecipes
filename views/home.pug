@@ -3,7 +3,6 @@ extends layout
 block content
   
   include header.pug
-
   head
     link(rel='stylesheet', href='/stylesheets/home-style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
@@ -17,7 +16,6 @@ block content
           $("body").html(result);
         }});
       }
-
 
       function GotoDeleteRecipes(id) {
         console.log("Hello");

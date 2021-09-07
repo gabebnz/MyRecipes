@@ -1,15 +1,16 @@
 extends layout
 
 block content
+ 
+
+  head
+    link(rel='stylesheet', href='/stylesheets/recipe-style.css')
   include header.pug
-   head
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
-    script.
-     
+
   body 
     main#main
     h1= title
-    p Welcome to the site: #{title}  
+    p Welcome to the site: #{title}
     form(role='form' action="/addshoppinglistitem" method="post" )
       label(for='Item') Item:
       input(type="text" name="Item" placeholder="e.g. 1kg Flour")
