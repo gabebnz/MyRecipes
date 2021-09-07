@@ -111,9 +111,11 @@ router.post('/addshoppinglistitem', function(req, res){
     function (error, success) {
       if (error) {
           console.log(error);
+          res.redirect('/shoppinglist');
       } else {
           console.log("random")
           console.log(success);
+          res.redirect('/shoppinglist');
 
       }
   });
