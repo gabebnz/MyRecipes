@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const recipes = require('../models/recipe');
-const shoppinglist = require('../models/recipe');
+const shoppinglist = require('../models/shoppinglist');
 
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
@@ -106,7 +106,7 @@ router.post('/addshoppinglistitem', function(req, res){
 
 
   shoppinglist.findOneAndUpdate(
-    {_ID: tempID},
+    {_id: tempID},
     {$push:{List:Item}},
     function (error, success) {
       if (error) {
