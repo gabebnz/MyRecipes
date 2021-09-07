@@ -1,4 +1,5 @@
 var express = require('express');
+var createError = require('http-errors')
 var router = express.Router();
 
 const recipes = require('../models/recipe');
@@ -14,6 +15,7 @@ router.get('/home', function(req, res, next) {
   recipes.find({}, function (err, docs) {
     if (err){
         console.log(err);
+        res.redirect('/'); // we need a better error handler
     }
     else{
         recipess = docs;
@@ -33,6 +35,7 @@ router.get('/recipe/:_id', function(req, res) {
   recipes.findOne({"_id":id}, function (err, docs){
     if (err){
       console.log(err);
+      res.redirect('/home'); // we need a better error handler
     }
     else{
         recipe = docs;
@@ -93,6 +96,24 @@ router.post('/delete', function(req, res){ //using for delete
     .then(recipes => res.json({ mgs: 'Recipes deleted successfully' }))
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
 });
+
+router.post('/removeshoppinglistitem', function(req, res){ // in progress doesnt work..
+  let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
+  let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
+
+  shoppinglist.findOneAndUpdate(
+    {_id: tempID},
+    {$pull:{List:Item}},
+    function (error, success) {
+      if (error) {
+          console.log(error);
+          res.redirect('/shoppinglist');
+      } else {
+          console.log(success);
+          res.redirect('/shoppinglist');
+      }
+  });
+})
 
 router.post('/addshoppinglistitem', function(req, res){
   let tempID = "6136cdceadb34168696581a9"; // temp until we get logins

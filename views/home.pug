@@ -18,8 +18,6 @@ block content
       }
 
       function GotoDeleteRecipes(id) {
-        console.log("Hello");
-        console.log(id);
         $.ajax({
           url: "/delete", 
           data: {ToDelete: id}, 
