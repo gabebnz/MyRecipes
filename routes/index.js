@@ -5,13 +5,18 @@ var router = express.Router();
 const recipes = require('../models/recipe');
 const shoppinglist = require('../models/shoppinglist');
 
+//Google Auth
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = '568232610264-cd4mdts6cc7160ollui9efmk0dpihcjo.apps.googleusercontent.com'
+const client = new OAuth2Client(CLIENT_ID);
+
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'MyRecipes' });
 });
 
 /* GET home page. */
-router.get('/home', function(req, res, next) {
+router.get('/home', checkAuthenticated, function(req, res, next) {
   recipes.find({}, function (err, docs) {
     if (err){
         console.log(err);
@@ -28,7 +33,7 @@ router.get('/home', function(req, res, next) {
 });
 
 /* GET recipe page. */
-router.get('/recipe/:_id', function(req, res) {
+router.get('/recipe/:_id', checkAuthenticated, function(req, res) {
   
   var id = req.params._id;
 
@@ -49,19 +54,24 @@ router.get('/recipe/:_id', function(req, res) {
 
  
 /* GET mealplanner page. */
-router.get('/mealplanner', function(req, res, next) {
+router.get('/mealplanner', checkAuthenticated, function(req, res, next) {
   res.render('mealplanner', { title: 'Meal Planner' });
 });
 
 /* GET shoppinglist page. */
-router.get('/shoppinglist', function(req, res, next) {
+router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
   res.render('shoppinglist', { title: 'Shopping List' });
 });
 
 /* GET shoppinglist page. */
-router.get('/insertRecipes', function(req, res, next) {
+router.get('/insertRecipes', checkAuthenticated, function(req, res, next) {
   res.render('insertRecipes', { title: 'Insert Recipes' });
 });
+
+router.get('/logout', function(req, res){
+  res.clearCookie('session-token');
+  res.redirect('/');
+})
 
 router.post('/insertRecipes', function(req, res){ //may remove
   console.log('MyRecipes');
@@ -132,5 +142,50 @@ router.post('/addshoppinglistitem', function(req, res){
       }
   });
 })
+
+//recieves the Google ID token from the frontend and verifies it
+router.post('/login', function(req, res){
+  let token = req.body.token;
+
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,  
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+      }
+      verify()
+      .then(()=>{
+          res.cookie('session-token', token);
+          res.send('success')
+      })
+      .catch(console.error);
+})
+
+//checks whether the user is logged in and gets user information
+function checkAuthenticated(req, res, next){
+  let token = req.cookies['session-token'];
+
+    let user = {};
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,  
+        });
+        const payload = ticket.getPayload();
+        user.name = payload.name;
+        user.email = payload.email;
+        user.id = payload.sub;
+      }
+      verify()
+      .then(()=>{
+          req.user = user;
+          next();
+      })
+      .catch(err=>{
+          res.redirect('/')// redirects to login page if not logged in
+      })
+}
 
 module.exports = router;
