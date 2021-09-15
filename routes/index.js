@@ -7,7 +7,7 @@ const shoppinglist = require('../models/shoppinglist');
 
 //Google Auth
 const {OAuth2Client} = require('google-auth-library');
-const CLIENT_ID = '568232610264-cd4mdts6cc7160ollui9efmk0dpihcjo.apps.googleusercontent.com'
+const CLIENT_ID = '568232610264-ehpmqcucb6midct4bn9le1vk4h626bf6.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
 
 /* GET welcome page. */
