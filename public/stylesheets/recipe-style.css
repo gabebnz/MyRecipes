@@ -35,6 +35,12 @@ body{
     font-size: 1.75em;
 }
 
+.recipelabel{
+    margin-top:10px;
+    float: right;
+    font-size: 1.15em;
+}
+
 .recipedescription{
     margin-top:10px;
     font-size: 1.15em;
