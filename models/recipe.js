@@ -18,6 +18,15 @@ const RecipeSchema = new mongoose.Schema({
   },
   Method: {
     type: String
+  },
+  Label1: {
+    type: String
+  },
+  Label2: {
+    type: String
+  },
+  Label3: {
+    type: String
   }
 },{collection:'recipes'});
 
