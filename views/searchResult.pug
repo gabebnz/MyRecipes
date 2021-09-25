@@ -30,9 +30,10 @@ block content
     .outerwrapper 
       .leftwrapper 
         .recipeheader 
-          h1 Your Recipes
+          h1 Search Result
 
-        each recipe in recipes
+        if recipes
+         each recipe in recipes
           - var id = recipe._id
           .recipewrapper 
             a.recipeleft(href="../recipe/"+recipe.id)
@@ -45,6 +46,9 @@ block content
             // Maybe the delete button should have an 'are you sure' alert
             .reciperight(onclick="GotoDeleteRecipes("+JSON.stringify(id)+")") 
               p x
+        else 
+            .recipetitle
+                p No recipes found   
           
       .rightwrapper 
         .recipeheader 

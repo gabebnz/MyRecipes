@@ -10,6 +10,9 @@ const {OAuth2Client} = require('google-auth-library');
 const CLIENT_ID = '568232610264-cd4mdts6cc7160ollui9efmk0dpihcjo.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
 
+//for search recipes
+var SavePostSearchResult;
+
 /* GET welcome page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'MyRecipes' });
@@ -63,9 +66,31 @@ router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
   res.render('shoppinglist', { title: 'Shopping List' });
 });
 
-/* GET shoppinglist page. */
+/* GET insert page. */
 router.get('/insertRecipes', checkAuthenticated, function(req, res, next) {
   res.render('insertRecipes', { title: 'Insert Recipes' });
+});
+
+/* GET search page. */
+router.get('/searchRecipes', checkAuthenticated, function(req, res, next) {
+  res.render('searchRecipes', { title: 'Search Recipes' });
+});
+
+/* GET search result page. */
+router.get('/searchResult', checkAuthenticated, function(req, res, next) {
+  recipes.find({ Title: new RegExp(SavePostSearchResult, "i")}, function (err, docs) {
+    if (err){
+        console.log(err);
+    }
+    else{
+        if (docs.length === 0) {
+          res.render('searchResult', { title: 'Search Result'});
+        }
+        else {
+          res.render('searchResult', { title: 'Search Result', recipes:docs});
+        }
+    }
+  })
 });
 
 router.get('/logout', function(req, res){
@@ -101,6 +126,12 @@ router.post('/', function(req, res){ //using for insert
         res.redirect('/home');
       }
   })
+});
+
+router.post('/searchRecipes', function(req, res){ //using for search
+  var searchValue = req.body.Title;
+  SavePostSearchResult = searchValue;
+  res.redirect('/searchResult'); //post to result with data(SavePostSearchResult)
 });
 
 router.post('/delete', function(req, res){ //using for delete
