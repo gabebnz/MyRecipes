@@ -101,6 +101,24 @@ router.get('/searchResult', checkAuthenticated, function(req, res, next) {
   })
 });
 
+/* GET update receipes page. */
+router.get('/updateRecipes/:_id', checkAuthenticated, function(req, res, next) {
+  var id = req.params._id;
+  recipes.findOne({"_id":id}, function (err, docs){
+    if (err){
+      console.log(err);
+      res.redirect('/home'); // we need a better error handler
+    }
+    else{
+      recipe = docs;
+    }
+  })
+  .then(function(response) {
+    res.render('updateRecipes', { title: 'Update Recipes', recipe:response, user:req.user});
+  })
+  .catch(err => console.log(err));
+});
+
 router.get('/logout', function(req, res){
   res.clearCookie('session-token');
   res.redirect('/');
@@ -111,8 +129,6 @@ router.post('/insertRecipes', function(req, res){ //may remove
 });
 
 router.post('/addrecipe', checkAuthenticated, function(req, res){ //using for insert
-
-
   const insertColumn = new recipes ({
     UserID: req.user.id,
     Title: req.body.Title,
@@ -129,8 +145,6 @@ router.post('/addrecipe', checkAuthenticated, function(req, res){ //using for in
     if (error) {
         console.error(error)}
     else{
-        console.log('You have saved the recipes!'); //change to alert later
-        console.log(document);
         res.redirect('/home');
       }
   })
@@ -140,6 +154,24 @@ router.post('/searchRecipes', function(req, res){ //using for search
   var searchValue = req.body.Title;
   SavePostSearchResult = searchValue;
   res.redirect('/searchResult'); //post to result with data(SavePostSearchResult)
+});
+
+router.post('/updateRecipes/:_id', checkAuthenticated, function(req, res){ //using for update
+  recipes.findByIdAndUpdate(req.params._id, req.body, function (err, docs){
+    if (err){
+      console.log(err);
+      res.redirect('/home'); // we need a better error handler
+    }
+    else{
+        recipe = docs;
+    }
+  })
+  .then(function(response) {
+    res.redirect('/recipe/'+req.params._id);
+  })
+  .catch(err =>
+    res.status(400).json({ error: 'Unable to update recipes' })
+  );
 });
 
 router.post('/delete', function(req, res){ //using for delete

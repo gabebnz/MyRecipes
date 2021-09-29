@@ -5,9 +5,10 @@ block content
   head
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
     script. 
-      function CancalButton() {
-        location.href = "/home";
-      }  
+      function CancalButton(id) {
+        //alert("'" + id + "/home'");
+        location.href = "./recipe" + id + "";
+      }
     style.
         input[type=submit] {
         margin-top : 25px;
@@ -75,7 +76,7 @@ block content
         &:after {
             content:"CANCEL";
         }
-        }          
+        }        
   body 
     // You can see the use of a variable below with the title
     // This is inherited from /routes/index.js where you can pass these in
@@ -84,39 +85,32 @@ block content
           // Modal Header
           .modal-header
             h4#myModalLabel.modal-title
-              | Insert Recipes
+              | Update Recipes
           // Modal Body
           .modal-body
-            form(role='form' method='post' action='/addrecipe')
+            form(role='form' method='post' action='/updateRecipes/'+recipe.id)
               div.form-group
                 label(for='Title') Title:
-                input#name.form-control(type='text', placeholder='Title' name='Title' required)
+                input#name.form-control(type='text', placeholder='Title' name='Title' value=recipe.Title required)    
               div.form-group
-                label(for='Description') Description:
-                input#email.form-control(type='text', placeholder='Description' name='Description' required)
+                label(for='Description') About:
+                input#email.form-control(type='text', placeholder='Description' name='Description' value=recipe.Description required)
               div.form-group
                 label(for='Ingredients') Ingredients:
-                input#email.form-control(type='text', placeholder='Ingredients' name='Ingredients')
+                - var IngredientsStr = String(recipe.Ingredients);
+                input#email.form-control(type='text', placeholder='Ingredients' name='Ingredients' value=IngredientsStr)
               div.form-group
                 label(for='Method') Method:
-                input#email.form-control(type='text', placeholder='Method' name='Method')  
-              //- div.form-group
-              //-   label(for='URL') URL:
-              //-   input#email.form-control(type='text', placeholder='URL' name='URL')
-              //- div.form-group
-              //-   label(for='Comments') Comments:
-              //-   input#email.form-control(type='text', placeholder='Comments' name='Comments')
+                input#email.form-control(type='text', placeholder='Method' name='Method' value=recipe.Method)  
               div.form-group
-                label(for='Label1') Label 1:
-                input#email.form-control(type='text', placeholder='Label 1' name='Label1')
+                label(for='Label1') Label1:
+                input#name.form-control(type='text', placeholder='Label1' name='Label1' value=recipe.Label1) 
               div.form-group
-                label(for='Label2') Label 2:
-                input#email.form-control(type='text', placeholder='Label 2' name='Label2')
+                label(for='Label1') Label2:
+                input#name.form-control(type='text', placeholder='Label2' name='Label2' value=recipe.Label2) 
               div.form-group
-                label(for='Label3') Label 3:
-                input#email.form-control(type='text', placeholder='Label 3' name='Label3')
-                br
-                            //-   button.btn.btn-primary(type="submit", name="asdf") Submit
-                            //-   button.btn.btn-default(type="button", data-dismiss="modal")                                
+                label(for='Label1') Label3:
+                input#name.form-control(type='text', placeholder='Label3' name='Label3' value=recipe.Label3)    
+                br 
                 input(value='Submit', type='submit')
-                button(value='Cancel', type='button' onclick="CancalButton()") Cancel
+                button(value='Cancel', type='button' onclick="CancalButton('" + recipe.id + "')") Cancel
