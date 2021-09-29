@@ -9,7 +9,8 @@ block content
     script. 
       function GotoInsertRecipes() {
         $.ajax({
-          url: "/insertRecipes", success: function(result){
+          url: "/insertRecipes", 
+          success: function(result){
           $("body").html(result);
         }});
       }

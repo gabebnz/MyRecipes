@@ -4,8 +4,47 @@ block content
   include header.pug
   head
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css')
+    script. 
+      function CancalButton() {
+        location.href = "/home";
+      }  
+
     style.
         input[type=submit] {
+        margin-top : 25px;
+        margin: -20px -50px; 
+        position:relative;
+        top:50%; 
+        left:30%;
+        outline:none;
+        height: 40px;
+        text-align: center;
+        width: 130px;
+        border-radius:40px;
+        background: #fff;
+        border: 2px solid $green;
+        color:$green;
+        letter-spacing:1px;
+        text-shadow:0;
+        font:{
+            size:12px;
+            weight:bold;
+        }
+        cursor: pointer;
+        transition: all 0.25s ease;
+        &:hover {
+            color:white;
+            background: $green;
+        }
+        &:active {
+            letter-spacing: 2px ;
+        }
+        &:after {
+            content:"SUBMIT";
+        }
+        }
+
+        button[type=button] {
         margin-top : 25px;
         margin: -20px -50px; 
         position:relative;
@@ -35,9 +74,9 @@ block content
             letter-spacing: 2px ;
         }
         &:after {
-            content:"SUBMIT";
+            content:"CANCEL";
         }
-        }
+        }         
   body 
     // You can see the use of a variable below with the title
     // This is inherited from /routes/index.js where you can pass these in
@@ -55,3 +94,4 @@ block content
                 input#name.form-control(type='text', placeholder='Enter Recipes Title' name='Title')
                 br                            
                 input(value='Submit', type='submit')
+                button(value='Cancel', type='button' onclick="CancalButton()") Cancel

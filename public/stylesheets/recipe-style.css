@@ -92,3 +92,34 @@ body{
     font-size: 4em;
     font-family: 'Josefin Sans', sans-serif;
 }
+
+.recipewrapper{
+    display:flex;
+    flex-direction: row;
+
+    text-decoration: none;
+
+    color:black;
+
+    width:100%;
+    height:85px;
+    transition: 0.3s;
+}
+
+.recipewrapper:hover{
+    background:rgb(240, 240, 240);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.recipewrapper:hover .reciperight{
+    visibility: visible;
+}
+
+.newrecipebutton{
+    display:flex;
+    height:100%;
+    width:100%;
+    align-items: center;
+    justify-content: center;
+}
