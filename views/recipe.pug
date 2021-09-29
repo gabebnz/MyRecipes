@@ -12,7 +12,13 @@ block content
             .leftwrapper 
                 .recipetitle 
                     h1 #{recipe.Title}
-                    h3 by #{recipe.UserID} (name will come soon)
+
+                    if (user != null) && (user.name == recipe.UserName)
+                        h3 by you!
+                    else if recipe.UserName == null || ""
+                        h3 by someone? (name is null)
+                    else 
+                        h3 by #{recipe.UserName}
 
                 .recipelabel
                     h2 Labels
