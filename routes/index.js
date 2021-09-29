@@ -71,7 +71,16 @@ router.get('/mealplanner', checkAuthenticated, function(req, res, next) {
 
 /* GET shoppinglist page. */
 router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
-  res.render('shoppinglist', { title: 'Shopping List' });
+
+  shoppinglist.findOne({"UserID":req.user.id}, function (err, docs){
+    if (err){
+      console.log(err);
+      res.redirect('/home'); // we need a better error handler
+    }})
+  .then(function(response) {
+    res.render('shoppinglist', { title: 'Shopping List', shoppinglist:response, user:req.user});
+  })
+  .catch(err => console.log(err));
 });
 
 /* GET insert page. */
@@ -131,6 +140,7 @@ router.post('/insertRecipes', function(req, res){ //may remove
 router.post('/addrecipe', checkAuthenticated, function(req, res){ //using for insert
   const insertColumn = new recipes ({
     UserID: req.user.id,
+    UserName:req.user.name,
     Title: req.body.Title,
     Description:req.body.Description,
     Ingredients:req.body.Ingredients,
@@ -145,6 +155,7 @@ router.post('/addrecipe', checkAuthenticated, function(req, res){ //using for in
     if (error) {
         console.error(error)}
     else{
+        console.log('You have saved the recipes!'); //change to alert later
         res.redirect('/home');
       }
   })
@@ -199,22 +210,23 @@ router.post('/removeshoppinglistitem', function(req, res){ // in progress doesnt
   });
 })
 
-router.post('/addshoppinglistitem', function(req, res){
-  let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
+router.post('/addshoppinglistitem', checkAuthenticated, function(req, res){
   let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
 
   shoppinglist.findOneAndUpdate(
-    {_id: tempID},
+    {UserID: req.user.id},
     {$push:{List:Item}},
+    {upsert: true}, // this boolean checks if the object exists, if not, creates it
     function (error, success) {
       if (error) {
-          console.log(error);
+          console.log("error");
           res.redirect('/shoppinglist');
       } else {
-          console.log(success);
+          console.log("success");
           res.redirect('/shoppinglist');
       }
   });
+
 })
 
 //recieves the Google ID token from the frontend and verifies it
