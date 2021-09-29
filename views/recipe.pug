@@ -6,12 +6,13 @@ block content
     include header.pug
 
     if recipe == null
-        h1 RECIPE ID NOT FOUND (RECIPE NULL).
+        h1 RECIPE ID NOT FOUND (RECIPE IS NULL).
     body 
         .outerwrapper 
             .leftwrapper 
                 .recipetitle 
                     h1 #{recipe.Title}
+                    h3 by #{recipe.UserID} (name will come soon)
 
                 .recipelabel
                     h2 Labels

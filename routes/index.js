@@ -14,13 +14,19 @@ const client = new OAuth2Client(CLIENT_ID);
 var SavePostSearchResult;
 
 /* GET welcome page. */
-router.get('/', function(req, res, next) {
+router.get('/', getUser, function(req, res, next) {
+
+  // if user is logged in, they get taken to home page.
+  if(req.user != null){
+    res.redirect('/home');
+  }
+
   res.render('index', { title: 'MyRecipes' });
 });
 
 /* GET home page. */
 router.get('/home', checkAuthenticated, function(req, res, next) {
-  recipes.find({}, function (err, docs) {
+  recipes.find({"UserID":req.user.id}, function (err, docs) {
     if (err){
         console.log(err);
         res.redirect('/'); // we need a better error handler
@@ -30,14 +36,16 @@ router.get('/home', checkAuthenticated, function(req, res, next) {
     }
   })
   .then(function(response) {
-    res.render('home', { title: 'MyRecipes', recipes:response});
+    res.render('home', { title: 'MyRecipes', recipes:response, user:req.user});
   })
   .catch(err => console.log(err));
 });
 
 /* GET recipe page. */
-router.get('/recipe/:_id', checkAuthenticated, function(req, res) {
-  
+// We dont have to check authentication for this page as non logged in users 
+// should be able to view these pages.
+router.get('/recipe/:_id', getUser, function(req, res) {
+
   var id = req.params._id;
 
   recipes.findOne({"_id":id}, function (err, docs){
@@ -50,7 +58,7 @@ router.get('/recipe/:_id', checkAuthenticated, function(req, res) {
     }
   })
   .then(function(response) {
-    res.render('recipe', { title: 'Recipe', recipe:response});
+    res.render('recipe', { title: 'Recipe', recipe:response, user:req.user});
   })
   .catch(err => console.log(err));
 });
@@ -102,11 +110,11 @@ router.post('/insertRecipes', function(req, res){ //may remove
   console.log('MyRecipes');
 });
 
-router.post('/', function(req, res){ //using for insert
-  GetUserID = 0; //change later
+router.post('/addrecipe', checkAuthenticated, function(req, res){ //using for insert
+
 
   const insertColumn = new recipes ({
-    UserID: GetUserID,
+    UserID: req.user.id,
     Title: req.body.Title,
     Description:req.body.Description,
     Ingredients:req.body.Ingredients,
@@ -219,6 +227,33 @@ function checkAuthenticated(req, res, next){
       })
       .catch(err=>{
           res.redirect('/')// redirects to login page if not logged in
+      })
+}
+
+//dupe function that doesnt redirect (for recipe page) theres surely a better way to do this
+// use this when you want to get the user information, but dont want to redirect if they arent logged in
+function getUser(req, res, next){
+  let token = req.cookies['session-token'];
+
+    let user = {};
+    async function verify() {
+        const ticket = await client.verifyIdToken({
+            idToken: token,
+            audience: CLIENT_ID,  
+        });
+        const payload = ticket.getPayload();
+        user.name = payload.name;
+        user.email = payload.email;
+        user.id = payload.sub;
+      }
+      verify()
+      .then(()=>{
+          req.user = user;
+          next();
+      })
+      .catch(err=>{
+          console.log("Viewing, but not logged in")
+          next();
       })
 }
 

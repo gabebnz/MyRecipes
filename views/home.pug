@@ -25,12 +25,16 @@ block content
         }});
       }
 
-
   body 
     .outerwrapper 
       .leftwrapper 
         .recipeheader 
           h1 Your Recipes
+
+        // if the user has no recipes, show suggestion
+        if recipes.length == 0 
+          h2 You have no recipes! Why not create one now?
+        
 
         each recipe in recipes
           - var id = recipe._id
@@ -38,7 +42,7 @@ block content
             a.recipeleft(href="../recipe/"+recipe.id)
               .recipetitle 
                 h2 #{recipe.Title}
-                p by (username)
+                p by you!
               .recipedescription
                 p #{recipe.Description} 
             
@@ -58,4 +62,4 @@ block content
 
         a.recipewrapper(href="/searchRecipes")
           .newrecipebutton 
-            p Search Recipe 
+            p Search Recipes
