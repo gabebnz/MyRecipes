@@ -1,25 +1,44 @@
 extends layout
 
 block content
- 
-  head
-    link(rel='stylesheet', href='/stylesheets/recipe-style.css')
   include header.pug
+  head
+    link(rel='stylesheet', href='/stylesheets/home-style.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+    script. 
+  // TODO:  D E L E T E - R E C I P E S
+      function GotoDeleteShoppingListItem(id) {
+        $.ajax({
+          url: "/delete", 
+          data: {ToDelete: id}, 
+          method: "POST",
+          success: function(result){
+            alert("Recipes deleted successfully");
+            location.reload();
+        }});
+      }
+  // TODO:  D I S P L A Y - S H O P P I N G L I S T
+  body
+    .outerwrapper 
+        .leftwrapper 
+          .recipeheader  
+            h1= title
+            if user != null && shoppinglist != null
+              h2 Welcome, #{user.name}. This is your shopping list: 
+            .recipewrapper
+              .recipetitle
+                each item in shoppinglist.List 
+                  h3 #{item.Item} x #{item.Quantity}  
+              .reciperight(onclick="GotoDeleteRecipes("+JSON.stringify(id)+")") 
+              p x
 
-  body 
-    h1= title
-
-    if user != null && shoppinglist != null
-      p Welcome, #{user.name}. This is your shopping list: 
-
-      each item in shoppinglist.List 
-        p Item: #{item.Item} x #{item.Quantity}
-
-
-
-    form(role='form' action="/addshoppinglistitem" method="post" )
-      label(for='Item') Item:
-      input(type="text" name="Item" placeholder="e.g. 1kg Flour")
-      label(for='Quantity') Quantity:
-      input(type="number" name="Quantity" placeholder="e.g. 2")
-      input(value="Submit" type="submit")
+          form(role='form' action="/addshoppinglistitem" method="post" )
+            div.form-group
+              label(for='Item') Item:
+              input(type="text" name="Item" placeholder="e.g. 1kg Flour")
+            div.form-group
+              label(for='Quantity') Quantity:
+              input(type="number" name="Quantity" placeholder="e.g. 2")
+            div.form-group
+              input(value="Submit" type="submit")
+        
