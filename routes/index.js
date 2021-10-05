@@ -81,6 +81,12 @@ router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
     res.render('shoppinglist', { title: 'Shopping List', shoppinglist:response, user:req.user});
   })
   .catch(err => console.log(err));
+
+
+
+
+
+  
 });
 
 /* GET insert page. */

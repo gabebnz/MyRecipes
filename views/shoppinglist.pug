@@ -6,31 +6,39 @@ block content
     link(rel='stylesheet', href='/stylesheets/home-style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script. 
-  // TODO:  D E L E T E - R E C I P E S
-      function GotoDeleteShoppingListItem(id) {
-        $.ajax({
-          url: "/delete", 
-          data: {ToDelete: id}, 
-          method: "POST",
-          success: function(result){
-            alert("Recipes deleted successfully");
-            location.reload();
-        }});
-      }
-  // TODO:  D I S P L A Y - S H O P P I N G L I S T
+      //- function GotoDeleteShoppingListItem(id) { 
+      //-   $.ajax({
+      //-     url: "/removeshoppinglistitem", 
+      //-     data: {ToDelete: id}, 
+      //-     method: "POST",
+      //-     success: function(result){
+      //-       alert("Item deleted successfully");
+      //-       location.reload(); 
+      //-   }});
+      //- }
+      style.
+      
   body
     .outerwrapper 
         .leftwrapper 
           .recipeheader  
             h1= title
-            if user != null && shoppinglist != null
-              h2 Welcome, #{user.name}. This is your shopping list: 
+          if user != null && shoppinglist != null
+            h2 Welcome, #{user.name}. This is your shopping list: 
+
+          each item in shoppinglist.List 
             .recipewrapper
-              .recipetitle
-                each item in shoppinglist.List 
-                  h3 #{item.Item} x #{item.Quantity}  
-              .reciperight(onclick="GotoDeleteRecipes("+JSON.stringify(id)+")") 
-              p x
+              h3 Item: #{item.Item} Quantity: #{item.Quantity}  
+
+              .recipeleft 
+                div.form-group
+                  <input type="checkbox" name="checkbox">
+                  <label for="checkbox"> - check </label><br>
+                .recipetitle
+                .recipedescription
+              .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+")") 
+
+                p x
 
           form(role='form' action="/addshoppinglistitem" method="post" )
             div.form-group
