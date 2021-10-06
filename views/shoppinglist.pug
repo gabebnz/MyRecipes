@@ -8,12 +8,18 @@ block content
 
   body 
     h1= title
-    p Welcome to the site: #{title}
+
+    if user != null && shoppinglist != null
+      p Welcome, #{user.name}. This is your shopping list: 
+
+      each item in shoppinglist.List 
+        p Item: #{item.Item} x #{item.Quantity}
+
+
+
     form(role='form' action="/addshoppinglistitem" method="post" )
       label(for='Item') Item:
       input(type="text" name="Item" placeholder="e.g. 1kg Flour")
       label(for='Quantity') Quantity:
       input(type="number" name="Quantity" placeholder="e.g. 2")
       input(value="Submit" type="submit")
-
-    body
