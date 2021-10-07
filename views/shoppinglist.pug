@@ -17,31 +17,31 @@ block content
         }});
       }
       style.
-      // using the recipe style to keep the same visual appearance for the website
+      input {
+        width: 100%;
+      }
+      // using the home style to keep the same visual appearance for the website
   body
     .outerwrapper 
         .leftwrapper 
           .recipeheader  
             h1= title
           if user != null && shoppinglist != null
-            h2 Welcome, #{user.name}. This is your shopping list: 
+            h2 #{user.name}'s shopping list: 
 
           each item in shoppinglist.List 
             .recipewrapper
-            
-
               .recipeleft 
-
                 .recipetitle
                   h3 Item: #{item.Item}
                 .recipedescription
-                  p Quantity: #{item.Quantity}  
+                  p <strong>Quantity:  </strong> #{item.Quantity}  
                   div.form-group
                   <input type="checkbox" name="checkbox">
                   <label for="checkbox">  ✓</label><br>
               .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+")") 
-                p x
-
+                p ✗
+          
           form(role='form' action="/addshoppinglistitem" method="post" )
             div.form-group
               label(for='Item') <strong>Item:</strong>
