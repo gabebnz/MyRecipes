@@ -17,7 +17,7 @@ block content
         }});
       }
       style.
-      
+      // using the recipe style to keep the same visual appearance for the website
   body
     .outerwrapper 
         .leftwrapper 
@@ -28,24 +28,26 @@ block content
 
           each item in shoppinglist.List 
             .recipewrapper
-              h3 Item: #{item.Item} Quantity: #{item.Quantity}  
+            
 
               .recipeleft 
-                div.form-group
-                  <input type="checkbox" name="checkbox">
-                  <label for="checkbox"> - check </label><br>
-                .recipetitle
-                .recipedescription
-              .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+")") 
 
+                .recipetitle
+                  h3 Item: #{item.Item}
+                .recipedescription
+                  p Quantity: #{item.Quantity}  
+                  div.form-group
+                  <input type="checkbox" name="checkbox">
+                  <label for="checkbox">  ✓</label><br>
+              .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+")") 
                 p x
 
           form(role='form' action="/addshoppinglistitem" method="post" )
             div.form-group
-              label(for='Item') Item:
+              label(for='Item') <strong>Item:</strong>
               input(type="text" name="Item" placeholder="e.g. 1kg Flour")
             div.form-group
-              label(for='Quantity') Quantity:
+              label(for='Quantity') <strong>Quantity:</strong>
               input(type="number" name="Quantity" placeholder="e.g. 2")
             div.form-group
               input(value="Submit" type="submit")

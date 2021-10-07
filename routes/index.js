@@ -198,17 +198,25 @@ router.post('/delete', function(req, res){ //using for delete
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
 });
 
-router.post('/delete', function(req, res, next){
-  var id = req.body.id;
-  mongo.connect(url,function(err, db){
-    assert.equal(null, err);
-    db.collection('user-data').deleteOne({"_id": objectId(id)}, function(err,result) {
-      assert.equal(null, err);
-      console.log('Item deleted');
-      db.close();
-    });
-  });
+router.post('/removeshoppinglistitem', function(req, res){ //using for delete
+  var data = req.body.ToDelete;
+  shoppinglist.findByIdAndRemove(data)
+    .then(shoppinglist => res.json({ mgs: 'Item deleted successfully' }))
+    .catch(err => res.status(404).json({ error: 'No such Item in Shopping List' }));
 });
+// N O T  W O R K I N G
+// router.post('/delete', function(req, res, next){  
+//   var id = req.body.id;
+//   mongo.connect(url,function(err, db){
+//     assert.equal(null, err);
+//     db.collection('user-data').deleteOne({"_id": objectId(id)}, function(err,result) {
+//       assert.equal(null, err);
+//       console.log('Item deleted');
+//       db.close();
+//     });
+//   });
+// });
+
 // router.post('/removeshoppinglistitem', function(req, res){ // in progress doesnt work..
 //   let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
 //   let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
