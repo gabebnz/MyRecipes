@@ -78,15 +78,11 @@ router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
       res.redirect('/home'); // we need a better error handler
     }})
   .then(function(response) {
+    console.log(response)
     res.render('shoppinglist', { title: 'Shopping List', shoppinglist:response, user:req.user});
   })
   .catch(err => console.log(err));
 
-
-
-
-
-  
 });
 
 /* GET insert page. */
@@ -199,6 +195,7 @@ router.post('/delete', function(req, res){ //using for delete
 });
 
 router.post('/removeshoppinglistitem', function(req, res){ //using for delete
+  console.log(req.body);
   var data = req.body.ToDelete;
   shoppinglist.findByIdAndRemove(data)
     .then(shoppinglist => res.json({ mgs: 'Item deleted successfully' }))

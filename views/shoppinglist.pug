@@ -7,6 +7,7 @@ block content
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script. 
       function GotoDeleteShoppingListItem(id) { 
+        console.log(id);
         $.ajax({
           url: "/removeshoppinglistitem", 
           data: {ToDelete: id}, 
@@ -16,39 +17,46 @@ block content
             location.reload(); 
         }});
       }
-      style.
-      input {
-        width: 100%;
-      }
+  //- if user != null && shoppinglist == null
+  //-   h2 #{user.name}'s shopping list: 
       // using the home style to keep the same visual appearance for the website
   body
     .outerwrapper 
         .leftwrapper 
           .recipeheader  
             h1= title
-          if user != null && shoppinglist != null
-            h2 #{user.name}'s shopping list: 
+          if shoppinglist
+            each item in shoppinglist.List 
+              - var id = shoppinglist._id
+              .recipewrapper
+                .recipeleft 
+                  .recipetitle
+                    h3 Item: #{item.Item}
+                  .recipedescription
+                    p <strong>Quantity:  </strong> #{item.Quantity}  
+                    div.form-group
+                    <input type="checkbox" name="checkbox">
+                    <label for="checkbox">  ✓</label><br>
+                .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+")") 
+                  p ✗
 
-          each item in shoppinglist.List 
-            .recipewrapper
-              .recipeleft 
-                .recipetitle
-                  h3 Item: #{item.Item}
-                .recipedescription
-                  p <strong>Quantity:  </strong> #{item.Quantity}  
-                  div.form-group
-                  <input type="checkbox" name="checkbox">
-                  <label for="checkbox">  ✓</label><br>
-              .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+")") 
-                p ✗
+            form(role='form' action="/addshoppinglistitem" method="post" )
+              div.form-group
+                label(for='Item') <strong>Item:</strong>
+                input(type="text" name="Item" placeholder="e.g. 1kg Flour")
+              div.form-group
+                label(for='Quantity') <strong>Quantity:</strong>
+                input(type="number" name="Quantity" placeholder="e.g. 2")
+              div.form-group
+                input(value="Submit" type="submit")
+          else
+            form(role='form' action="/addshoppinglistitem" method="post" )
+              div.form-group
+                label(for='Item') <strong>Item:</strong>
+                input(type="text" name="Item" placeholder="e.g. 1kg Flour")
+              div.form-group
+                label(for='Quantity') <strong>Quantity:</strong>
+                input(type="number" name="Quantity" placeholder="e.g. 2")
+              div.form-group
+                input(value="Submit" type="submit")
           
-          form(role='form' action="/addshoppinglistitem" method="post" )
-            div.form-group
-              label(for='Item') <strong>Item:</strong>
-              input(type="text" name="Item" placeholder="e.g. 1kg Flour")
-            div.form-group
-              label(for='Quantity') <strong>Quantity:</strong>
-              input(type="number" name="Quantity" placeholder="e.g. 2")
-            div.form-group
-              input(value="Submit" type="submit")
-        
