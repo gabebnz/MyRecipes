@@ -9,8 +9,7 @@ block content
     script. 
       function GotoInsertRecipes() {
         $.ajax({
-          url: "/insertRecipes", 
-          success: function(result){
+          url: "/insertRecipes", success: function(result){
           $("body").html(result);
         }});
       }
@@ -26,30 +25,30 @@ block content
         }});
       }
 
+
   body 
     .outerwrapper 
       .leftwrapper 
         .recipeheader 
-          h1 Your Recipes
+          h1 Search Result
 
-        // if the user has no recipes, show suggestion
-        if recipes.length == 0 
-          h2 You have no recipes! Why not create one now?
-        
-
-        each recipe in recipes
+        if recipes
+         each recipe in recipes
           - var id = recipe._id
           .recipewrapper 
             a.recipeleft(href="../recipe/"+recipe.id)
               .recipetitle 
                 h2 #{recipe.Title}
-                p by <strong>you!</strong>
+                p by (username)
               .recipedescription
                 p #{recipe.Description} 
             
             // Maybe the delete button should have an 'are you sure' alert
             .reciperight(onclick="GotoDeleteRecipes("+JSON.stringify(id)+")") 
               p x
+        else 
+            .recipetitle
+                p No recipes found   
           
       .rightwrapper 
         .recipeheader 
@@ -63,4 +62,4 @@ block content
 
         a.recipewrapper(href="/searchRecipes")
           .newrecipebutton 
-            p Search Recipes
+            p Search Recipe 

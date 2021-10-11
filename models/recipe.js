@@ -5,6 +5,10 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  UserName: {
+    type: String,
+    required: true
+  },
   Title: {
     type: String,
     required: true
@@ -17,6 +21,15 @@ const RecipeSchema = new mongoose.Schema({
     type: Array
   },
   Method: {
+    type: String
+  },
+  Label1: {
+    type: String
+  },
+  Label2: {
+    type: String
+  },
+  Label3: {
     type: String
   }
 },{collection:'recipes'});
