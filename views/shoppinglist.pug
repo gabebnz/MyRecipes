@@ -6,11 +6,10 @@ block content
     link(rel='stylesheet', href='/stylesheets/home-style.css')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script. 
-      function GotoDeleteShoppingListItem(id) { 
-        console.log(id);
+      function GotoDeleteShoppingListItem(Id, Item, Quantity) { 
         $.ajax({
           url: "/removeshoppinglistitem", 
-          data: {ToDelete: id}, 
+          data: {id: Id, item: Item, quantity: Quantity}, 
           method: "POST",
           success: function(result){
             alert("Item deleted successfully");
@@ -37,7 +36,7 @@ block content
                     div.form-group
                     <input type="checkbox" name="checkbox">
                     <label for="checkbox">  ✓</label><br>
-                .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+")") 
+                .reciperight(onclick="GotoDeleteShoppingListItem("+JSON.stringify(id)+","+JSON.stringify(item.Item)+","+JSON.stringify(item.Quantity)+")") 
                   p ✗
 
             form(role='form' action="/addshoppinglistitem" method="post" )

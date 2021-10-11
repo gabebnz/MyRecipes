@@ -78,7 +78,6 @@ router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
       res.redirect('/home'); // we need a better error handler
     }})
   .then(function(response) {
-    console.log(response)
     res.render('shoppinglist', { title: 'Shopping List', shoppinglist:response, user:req.user});
   })
   .catch(err => console.log(err));
@@ -194,13 +193,22 @@ router.post('/delete', function(req, res){ //using for delete
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
 });
 
+// Updated delete function to only delete one item from list.
 router.post('/removeshoppinglistitem', function(req, res){ //using for delete
-  console.log(req.body);
-  var data = req.body.ToDelete;
-  shoppinglist.findByIdAndRemove(data)
-    .then(shoppinglist => res.json({ mgs: 'Item deleted successfully' }))
-    .catch(err => res.status(404).json({ error: 'No such Item in Shopping List' }));
+  shoppinglist.update(
+    {_id: req.body.id},
+    {"$pull":{"List": {"Item": req.body.item, "Quantity": req.body.quantity}}},
+    function (error, success) {
+      if (error) {
+          console.log(error);
+          res.redirect('/shoppinglist');
+      } else {
+          console.log(success);
+          res.redirect('/shoppinglist');
+      }
+  });
 });
+
 // N O T  W O R K I N G
 // router.post('/delete', function(req, res, next){  
 //   var id = req.body.id;
