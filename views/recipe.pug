@@ -45,7 +45,7 @@ block content
                     //This is an empty string. Not great but the easiest way to get the two 
                     //columns to line up :)
                     h1 ‎‎‎‎‏‏‎ ‎
-                if recipe.UserID == user.id
+                if (user != null) && (recipe.UserID == user.id)
                     a.recipewrapper(href="/updateRecipes/"+recipe.id)
                         .newrecipebutton 
                             p Update Recipes‏‏‎
