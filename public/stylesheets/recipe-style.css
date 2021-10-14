@@ -93,6 +93,18 @@ body{
     font-family: 'Josefin Sans', sans-serif;
 }
 
+.removelabel1 {
+    color: white;
+}
+
+.removelabel2 {
+    color: white;
+}
+
+.removelabel3 {
+    color: white;
+}
+
 .recipewrapper{
     display:flex;
     flex-direction: row;
