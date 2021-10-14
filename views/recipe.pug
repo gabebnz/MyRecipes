@@ -3,6 +3,20 @@ extends layout
 block content
     head 
         link(rel='stylesheet', href='/stylesheets/recipe-style.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+
+        script.
+            function deletelabel(labelId) {
+                let id = "#{recipe._id}";
+                $.ajax({
+                    url: "/deletelabel", 
+                    data: {labelId: labelId,recipeId: id}, 
+                    method: "POST",
+                    success: function(result){
+                        alert("Label deleted successfully");
+                        location.reload();
+                }});
+            }
     include header.pug
 
     if recipe == null
@@ -25,6 +39,18 @@ block content
                     h4 #{recipe.Label1}
                     h4 #{recipe.Label2}
                     h4 #{recipe.Label3}
+
+                    .removelabel1
+                    button(onclick="deletelabel('Label1')") 
+                        p Remove Label 1
+
+                    .removelabel2
+                    button(onclick="deletelabel('Label2')") 
+                        p Remove Label 2
+
+                    .removelabel3
+                    button(onclick="deletelabel('Label3')") 
+                        p Remove Label 3
 
                 .recipedescription 
                     h2 About

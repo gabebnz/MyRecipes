@@ -209,6 +209,26 @@ router.post('/removeshoppinglistitem', function(req, res){ //using for delete
   });
 });
 
+//remove labels by updating them their values to "" or null
+router.post('/deletelabel', function(req, res){
+  console.log(req.body.labelId);
+  var data = req.body.labelId;
+  var query = {};
+  query[""+ data] = " ";
+  recipes.update(
+    {_id: req.body.recipeId},
+    {"$unset":query},
+    function (error, success) {
+      if (error) {
+          console.log(error);
+          res.redirect(req.get('referer'));
+      } else {
+          console.log(success);
+          res.redirect(req.get('referer'));
+      }
+  });
+});
+
 // N O T  W O R K I N G
 // router.post('/delete', function(req, res, next){  
 //   var id = req.body.id;
