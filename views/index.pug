@@ -5,17 +5,38 @@ block content
   head
     link(rel='stylesheet', href='/stylesheets/index-style.css')
 
+    link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.7.2/css/all.css", integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin="anonymous")
+
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible' content='ie=edge')
+
   body
     script(src="https://accounts.google.com/gsi/client" async defer)
 
-    .slideshow-container
-      .mySlides.fade 
-        .textover
-          html
-            .content
-              h1 MyRecipes
-              br
-              div(
+    .slider
+      .slide.current
+          .content
+            h1 Welcome to MyRecipes
+            p Click on the 
+              b Left Arrow 
+              | for 
+              b login 
+              | or the 
+              b Right Arrow 
+              | for  
+              b Our Service & Purpose.
+      .slide
+        .content
+          h1 Our Service & Purpose
+          p 
+            | Our purpose is to provide customers with a service called MyRecipes. MyRecipes allows customers to easily keep track, 
+            | create and share their own recipes. Share with your friends, family or colleagues.
+      .slide
+        .content
+          h1 Login / Register
+          .centered_content
+            div(
                 id="g_id_onload"
                 data-client_id="568232610264-cd4mdts6cc7160ollui9efmk0dpihcjo.apps.googleusercontent.com"
                 data-context="signin"
@@ -33,46 +54,64 @@ block content
                 data-logo_alignment="left"
                 data-width=400
               )
-        img(src='images/img1.jpg' style='width:100%;height:1076px;')
-      .mySlides.fade
-        .textover
-          html
-            .content2
-              h1 What is our purpose?
-              br
-              p Our purpose is to provide customers with a service, our service allows customers to easily keep track, create and share their own recipes. Share with your friends, family or colleagues
 
-        img(src='images/img2.jpg' style='width:100%;height:1076px;')
-      a.prev(onclick='plusSlides(-1)') &#x276E;
-      a.next(onclick='plusSlides(1)') &#x276F;
-    div(style='text-align:center')
-      span.dot(onclick='currentSlide(1)')
-      span.dot(onclick='currentSlide(2)')
-
+    .buttons
+      button#prev
+        i.fas.fa-arrow-left
+      button#next
+        i.fas.fa-arrow-right
+    
     script.
-          var slideIndex = 1;
-          showSlides(slideIndex);
-          function plusSlides(n) {
-            showSlides(slideIndex += n);
-          }
-          function currentSlide(n) {
-            showSlides(slideIndex = n);
-          }
-          function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-            for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex-1].style.display = "block";
-            dots[slideIndex-1].className += " active";
-          }
+      const slides = document.querySelectorAll('.slide');
+      const next = document.querySelector('#next');
+      const prev = document.querySelector('#prev');
+      const auto = false;
+      const intervalTime = 5000;
+      let slideInterval;
+      const nextSlide = () => {
+
+        const current = document.querySelector('.current'); // Get current class
+        current.classList.remove('current'); // Remove current class
+        
+        if (current.nextElementSibling) { // Check for next slide
+          current.nextElementSibling.classList.add('current');
+        } else {
+          slides[0].classList.add('current');
+        }
+        setTimeout(() => current.classList.remove('current'));
+      };
+      const prevSlide = () => {
+        const current = document.querySelector('.current');
+        
+        current.classList.remove('current'); // Remove current class
+        
+        if (current.previousElementSibling) { // Check for prev slide
+          current.previousElementSibling.classList.add('current');
+        } else {
+          slides[slides.length - 1].classList.add('current');
+        }
+        setTimeout(() => current.classList.remove('current'));
+      };
+
+      next.addEventListener('click', e => { // Button events
+        nextSlide();
+        if (auto) {
+          clearInterval(slideInterval);
+          slideInterval = setInterval(nextSlide, intervalTime);
+        }
+      });
+
+      prev.addEventListener('click', e => {
+        prevSlide();
+        if (auto) {
+          clearInterval(slideInterval);
+          slideInterval = setInterval(nextSlide, intervalTime);
+        }
+      });
+      // Auto slide **created in case we want to make the slider automatic on a set timer**
+      if (auto) {
+        slideInterval = setInterval(nextSlide, intervalTime);
+      }
 
     script.
       function handleCredentialResponse(response) {
@@ -89,3 +128,4 @@ block content
           };
           xhr.send(JSON.stringify({token : id_token}));
       }
+

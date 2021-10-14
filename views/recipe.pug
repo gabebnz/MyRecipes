@@ -3,28 +3,47 @@ extends layout
 block content
     head 
         link(rel='stylesheet', href='/stylesheets/recipe-style.css')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+
+        script.
+            function deletelabel(labelId) {
+                let id = "#{recipe._id}";
+                $.ajax({
+                    url: "/deletelabel", 
+                    data: {labelId: labelId,recipeId: id}, 
+                    method: "POST",
+                    success: function(result){
+                        alert("Label deleted successfully");
+                        location.reload();
+                }});
+            }
     include header.pug
 
     if recipe == null
-        h1 RECIPE ID NOT FOUND (RECIPE IS NULL).
+        h1 RECIPE ID NOT FOUND (RECIPE NULL).
     body 
         .outerwrapper 
             .leftwrapper 
                 .recipetitle 
                     h1 #{recipe.Title}
 
-                    if (user != null) && (user.name == recipe.UserName)
-                        h3 by you!
-                    else if recipe.UserName == null || ""
-                        h3 by someone? (name is null)
-                    else 
-                        h3 by #{recipe.UserName}
-
                 .recipelabel
                     h2 Labels
                     h4 #{recipe.Label1}
                     h4 #{recipe.Label2}
                     h4 #{recipe.Label3}
+
+                    .removelabel1
+                    button(onclick="deletelabel('Label1')") 
+                        p Remove Label 1
+
+                    .removelabel2
+                    button(onclick="deletelabel('Label2')") 
+                        p Remove Label 2
+
+                    .removelabel3
+                    button(onclick="deletelabel('Label3')") 
+                        p Remove Label 3
 
                 .recipedescription 
                     h2 About
@@ -45,7 +64,3 @@ block content
                     //This is an empty string. Not great but the easiest way to get the two 
                     //columns to line up :)
                     h1 ‎‎‎‎‏‏‎ ‎
-                if (user != null) && (recipe.UserID == user.id)
-                    a.recipewrapper(href="/updateRecipes/"+recipe.id)
-                        .newrecipebutton 
-                            p Update Recipes‏‏‎

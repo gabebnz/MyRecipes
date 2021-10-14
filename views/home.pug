@@ -8,9 +8,11 @@ block content
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js')
     script. 
       function GotoInsertRecipes() {
-        $.ajax({
-          url: "/insertRecipes", 
-          success: function(result){
+        //- $.ajax({
+        //-   "url": "/mealplanner",
+        //-   "method": "POST"
+        //- }); 
+        $.ajax({url: "/insertRecipes", success: function(result){
           $("body").html(result);
         }});
       }
@@ -32,18 +34,13 @@ block content
         .recipeheader 
           h1 Your Recipes
 
-        // if the user has no recipes, show suggestion
-        if recipes.length == 0 
-          h2 You have no recipes! Why not create one now?
-        
-
         each recipe in recipes
           - var id = recipe._id
           .recipewrapper 
             a.recipeleft(href="../recipe/"+recipe.id)
               .recipetitle 
                 h2 #{recipe.Title}
-                p by <strong>you!</strong>
+                p by (username)
               .recipedescription
                 p #{recipe.Description} 
             
@@ -61,6 +58,3 @@ block content
           .newrecipebutton 
             p Create New Recipe
 
-        a.recipewrapper(href="/searchRecipes")
-          .newrecipebutton 
-            p Search Recipes
