@@ -26,6 +26,8 @@ router.get('/', getUser, function(req, res, next) {
 
 /* GET home page. */
 router.get('/home', checkAuthenticated, function(req, res, next) {
+
+
   recipes.find({"UserID":req.user.id}, function (err, docs) {
     if (err){
         console.log(err);
@@ -36,7 +38,21 @@ router.get('/home', checkAuthenticated, function(req, res, next) {
     }
   })
   .then(function(response) {
-    res.render('home', { title: 'MyRecipes', recipes:response, user:req.user});
+
+    var res1 = response;
+
+    recipes.find({}, function (err, docs) {
+      if (err){
+          console.log(err);
+          res.redirect('/'); // we need a better error handler
+      }
+      else{
+          recipess = docs;
+      }
+    }).then(function(response2) {
+      res.render('home', { title: 'MyRecipes', recipes:response, discovers:response2, user:req.user});
+    })
+    .catch(err => console.log(err));
   })
   .catch(err => console.log(err));
 });

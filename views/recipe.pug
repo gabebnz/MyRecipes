@@ -34,6 +34,21 @@ block content
                     else 
                         h3 by #{recipe.UserName}
 
+                .recipedescription 
+                    h2 About
+                    p #{recipe.Description}
+
+                .recipeingredients 
+                    h2 Ingredients
+
+                    - var ingredients = recipe.Ingredients[0].split(',');
+                    each ingredient in ingredients
+                        li #{ingredient}
+
+                .recipemethod 
+                    h2 Method
+                    p #{recipe.Method}
+
                 .recipelabel
                     h2 Labels
                     h4 #{recipe.Label1}
@@ -52,25 +67,12 @@ block content
                     button(onclick="deletelabel('Label3')") 
                         p Remove Label 3
 
-                .recipedescription 
-                    h2 About
-                    p #{recipe.Description}
-
-                .recipeingredients 
-                    h2 Ingredients
-
-                    each ingredient in recipe.Ingredients
-                        li #{ingredient}
-
-                .recipemethod 
-                    h2 Method
-                    p #{recipe.Method}
-
             .rightwrapper 
                 .recipeheader 
                     //This is an empty string. Not great but the easiest way to get the two 
                     //columns to line up :)
-                    h1 ‎‎‎‎‏‏‎ ‎
+                    h1 ‎‎‎‎‏‏‎ 
+                    h3 ‎‎‎‎‏‏‎ ‎‎
                 if (user != null) && (recipe.UserID == user.id)
                     a.recipewrapper(href="/updateRecipes/"+recipe.id)
                         .newrecipebutton 
