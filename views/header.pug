@@ -4,10 +4,13 @@ div(class="nav-wrapper")
         h1: a(href="../") My Recipes
 
     div(class="navigation")
-        ul 
-            // we will only show these if logged in.
-            li: a(href="../home") Home
-            li: a(href="../mealplanner") Meal Planner
-            li: a(href="../shoppinglist") Shopping List
-            li: a(href="../logout") Log Out
+        if user
+            ul 
+                // we will only show these if logged in.
+                li: a(href="../home") Home
+                li: a(href="../shoppinglist") Shopping List
+                li: a(href="../logout") Log Out
+        else 
+            ul 
+                li: a(href="../") Log In
 

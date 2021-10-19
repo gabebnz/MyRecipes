@@ -50,7 +50,7 @@ router.get('/home', checkAuthenticated, function(req, res, next) {
           recipess = docs;
       }
     }).then(function(response2) {
-      res.render('home', { title: 'MyRecipes', recipes:response, discovers:response2, user:req.user});
+      res.render('home', { title: 'MyRecipes | Home', recipes:response, discovers:response2, user:req.user});
     })
     .catch(err => console.log(err));
   })
@@ -74,15 +74,9 @@ router.get('/recipe/:_id', getUser, function(req, res) {
     }
   })
   .then(function(response) {
-    res.render('recipe', { title: 'Recipe', recipe:response, user:req.user});
+    res.render('recipe', { title: 'MyRecipes | '+response.Title, recipe:response, user:req.user});
   })
   .catch(err => console.log(err));
-});
-
- 
-/* GET mealplanner page. */
-router.get('/mealplanner', checkAuthenticated, function(req, res, next) {
-  res.render('mealplanner', { title: 'Meal Planner' });
 });
 
 /* GET shoppinglist page. */
@@ -94,7 +88,7 @@ router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
       res.redirect('/home'); // we need a better error handler
     }})
   .then(function(response) {
-    res.render('shoppinglist', { title: 'Shopping List', shoppinglist:response, user:req.user});
+    res.render('shoppinglist', { title: 'MyRecipes | Shopping List', shoppinglist:response, user:req.user});
   })
   .catch(err => console.log(err));
 
