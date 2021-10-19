@@ -26,6 +26,8 @@ router.get('/', getUser, function(req, res, next) {
 
 /* GET home page. */
 router.get('/home', checkAuthenticated, function(req, res, next) {
+
+
   recipes.find({"UserID":req.user.id}, function (err, docs) {
     if (err){
         console.log(err);
@@ -36,7 +38,21 @@ router.get('/home', checkAuthenticated, function(req, res, next) {
     }
   })
   .then(function(response) {
-    res.render('home', { title: 'MyRecipes', recipes:response, user:req.user});
+
+    var res1 = response;
+
+    recipes.find({}, function (err, docs) {
+      if (err){
+          console.log(err);
+          res.redirect('/'); // we need a better error handler
+      }
+      else{
+          recipess = docs;
+      }
+    }).then(function(response2) {
+      res.render('home', { title: 'MyRecipes', recipes:response, discovers:response2, user:req.user});
+    })
+    .catch(err => console.log(err));
   })
   .catch(err => console.log(err));
 });
@@ -81,6 +97,7 @@ router.get('/shoppinglist', checkAuthenticated, function(req, res, next) {
     res.render('shoppinglist', { title: 'Shopping List', shoppinglist:response, user:req.user});
   })
   .catch(err => console.log(err));
+
 });
 
 /* GET insert page. */
@@ -192,13 +209,11 @@ router.post('/delete', function(req, res){ //using for delete
     .catch(err => res.status(404).json({ error: 'No such recipes' }));
 });
 
-router.post('/removeshoppinglistitem', function(req, res){ // in progress doesnt work..
-  let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
-  let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
-
-  shoppinglist.findOneAndUpdate(
-    {_id: tempID},
-    {$pull:{List:Item}},
+// Updated delete function to only delete one item from list.
+router.post('/removeshoppinglistitem', function(req, res){ //using for delete
+  shoppinglist.update(
+    {_id: req.body.id},
+    {"$pull":{"List": {"Item": req.body.item, "Quantity": req.body.quantity}}},
     function (error, success) {
       if (error) {
           console.log(error);
@@ -208,7 +223,58 @@ router.post('/removeshoppinglistitem', function(req, res){ // in progress doesnt
           res.redirect('/shoppinglist');
       }
   });
-})
+});
+
+//remove labels by updating them their values to "" or null
+router.post('/deletelabel', function(req, res){
+  console.log(req.body.labelId);
+  var data = req.body.labelId;
+  var query = {};
+  query[""+ data] = " ";
+  recipes.update(
+    {_id: req.body.recipeId},
+    {"$unset":query},
+    function (error, success) {
+      if (error) {
+          console.log(error);
+          res.redirect(req.get('referer'));
+      } else {
+          console.log(success);
+          res.redirect(req.get('referer'));
+      }
+  });
+});
+
+// N O T  W O R K I N G
+// router.post('/delete', function(req, res, next){  
+//   var id = req.body.id;
+//   mongo.connect(url,function(err, db){
+//     assert.equal(null, err);
+//     db.collection('user-data').deleteOne({"_id": objectId(id)}, function(err,result) {
+//       assert.equal(null, err);
+//       console.log('Item deleted');
+//       db.close();
+//     });
+//   });
+// });
+
+// router.post('/removeshoppinglistitem', function(req, res){ // in progress doesnt work..
+//   let tempID = "6136cdceadb34168696581a9"; // temp until we get logins
+//   let Item = {Item: req.body.Item, Quantity: req.body.Quantity}
+
+//   shoppinglist.findOneAndUpdate(
+//     {_id: tempID},
+//     {$pull:{List:Item}},
+//     function (error, success) {
+//       if (error) {
+//           console.log(error);
+//           res.redirect('/shoppinglist');
+//       } else {
+//           console.log(success);
+//           res.redirect('/shoppinglist');
+//       }
+//   });
+// })
 
 router.post('/addshoppinglistitem', checkAuthenticated, function(req, res){
   let Item = {Item: req.body.Item, Quantity: req.body.Quantity}

@@ -5,6 +5,7 @@ body{
     align-items: center;
     flex-direction: column;
     height:100vh;
+    overflow-x: hidden;
 }
 
 .outerwrapper{
@@ -91,6 +92,18 @@ body{
 .recipeheader h1{
     font-size: 4em;
     font-family: 'Josefin Sans', sans-serif;
+}
+
+.removelabel1 {
+    color: white;
+}
+
+.removelabel2 {
+    color: white;
+}
+
+.removelabel3 {
+    color: white;
 }
 
 .recipewrapper{
